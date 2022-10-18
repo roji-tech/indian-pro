@@ -5,7 +5,8 @@ from django.shortcuts import render
 def index(request):
   print(request.POST)
   filter_option = request.POST.get("filter_opt")
-  print(filter_option)
+  file = request.FILES.get("file")
+  print(file.name)
 
   context = {
     "status": "",
