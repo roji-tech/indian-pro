@@ -6,6 +6,8 @@ def index(request):
   print(request.POST)
   filter_option = request.POST.get("filter_opt")
   file = request.FILES.get("file")
+
+  print(filter_option)
   print(file.name)
 
   context = {
