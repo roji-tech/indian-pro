@@ -28,7 +28,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        /* justify-content: center; */
         align-items: center;
         width: 100%;
         text-align: center;
@@ -39,6 +39,22 @@
         display: flex;
         flex-direction: column;
         width: 90%;
+      }
+
+      .resultSec {
+        background-color: rgb(204, 222, 238);
+        flex: 1;
+        width: 100%;
+        border-radius: 5px;
+        padding: 5px 0;
+      }
+
+      .resultSec > h3 {
+        text-decoration: underline;
+      }
+
+      .resultSec > #result {
+        margin-top: 10px;
       }
 
       input[type="file"] {
@@ -97,8 +113,8 @@
       <h1>DATA PROFILING</h1>
     </header>
     <main>
-      <!-- <form action="" method="post" enctype="multipart/form-data"> -->
-      <form>
+      <form action="" method="post" enctype="multipart/form-data">
+        <!-- <form> -->
         {% csrf_token %}
         <input type="file" name="file" id="file" />
         <select name="filter_opt" id="filter_opt">
@@ -109,25 +125,50 @@
         <button type="submit" id="submit">Submit</button>
       </form>
 
-      <section id="result">
-
+      <section class="resultSec">
+        <h3>Results</h3>
+        <div id="result">{{status}}</div>
+        <p>{{filter_option}}</p>
       </section>
     </main>
     <footer>copyright @ INDIA PRO</footer>
 
     <script>
       let btn = document.getElementById("submit");
+      let fileInput = document.getElementById("file");
       let filter_opt = document.getElementById("filter_opt");
-      let result = document.getElementById("result");
+      let resultSection = document.getElementById("result");
 
       const submit = async (e) => {
         e.preventDefault();
-        console.log("hi");
-        let response = await fetch("/filter/");
-        console.log(response)
+        let formdata = new FormData();
+        console.error(fileInput.files[0], "=====INT===========");
+        formdata.append("file", fileInput.files[0], "myfile1.png");
+        formdata.append("filter_opt", filter_opt.value);
+        console.log(filter_opt.value, "================");
+        // formdata.append(
+
+        let csrf_token = "{{csrf_token}}";
+        let requestOptions = {
+          method: "POST",
+          mode: "same-origin",
+          credentials: "include",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrf_token
+          },
+          body: formdata,
+          redirect: "follow"
+        };
+
+        fetch("http://127.0.0.1:8000/filter/", requestOptions)
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.log("error", error));
       };
 
-      btn.addEventListener("click", submit);
+      // btn.addEventListener("click", submit);
     </script>
   </body>
 </html>
