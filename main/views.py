@@ -22,7 +22,8 @@ def index(request):
 
         context = {
             "status": "this",
-            "filter_option": filter_option
+            "filter_option": filter_option,
+            "file": myfile
         }
         return render(request, "index.html", context)
 
