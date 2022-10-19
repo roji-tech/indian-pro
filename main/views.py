@@ -21,7 +21,7 @@ def index(request):
         print("GOT HERE")
 
         context = {
-            "status": "this",
+            "status": "This is it , now input your csv",
             "filter_option": filter_option,
             "file": myfile
         }
