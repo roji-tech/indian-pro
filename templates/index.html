@@ -135,43 +135,5 @@
       </section>
     </main>
     <footer>copyright @ INDIA PRO</footer>
-
-    <script>
-      let btn = document.getElementById("submit");
-      let fileInput = document.getElementById("file");
-      let filter_opt = document.getElementById("filter_opt");
-      let resultSection = document.getElementById("result");
-
-      const submit = async (e) => {
-        e.preventDefault();
-        let formdata = new FormData();
-        console.error(fileInput.files[0], "=====INT===========");
-        formdata.append("file", fileInput.files[0], "myfile1.png");
-        formdata.append("filter_opt", filter_opt.value);
-        console.log(filter_opt.value, "================");
-        // formdata.append(
-
-        let csrf_token = "{{csrf_token}}";
-        let requestOptions = {
-          method: "POST",
-          mode: "same-origin",
-          credentials: "include",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            "X-CSRFToken": csrf_token
-          },
-          body: formdata,
-          redirect: "follow"
-        };
-
-        fetch("http://127.0.0.1:8000/filter/", requestOptions)
-          .then((response) => response.text())
-          .then((result) => console.log(result))
-          .catch((error) => console.log("error", error));
-      };
-
-      // btn.addEventListener("click", submit);
-    </script>
   </body>
 </html>
